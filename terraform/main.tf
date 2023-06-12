@@ -68,12 +68,12 @@ module "rds" {
 }
 
 
-module "compute" {
-  source          = "./modules/ec2"
-  ami-jenkins     = var.ami-sonar
-  ami-sonar       = var.ami-sonar
-  ami-jfrog       = var.ami-sonar
-  subnets-compute = module.VPC.public_subnets-1
-  sg-compute      = [module.security.ALB-sg]
-  keypair         = var.keypair
-}
+#module "compute" {
+#  source          = "./modules/ec2"
+#  ami-jenkins     = var.ami-sonar
+#  ami-sonar       = var.ami-sonar
+#  ami-jfrog       = var.ami-sonar
+#  subnets-compute = module.VPC.public_subnets-1
+#  sg-compute      = [module.security.ALB-sg]
+#  keypair         = var.keypair
+#}
