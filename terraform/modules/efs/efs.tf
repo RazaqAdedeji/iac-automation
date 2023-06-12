@@ -1,3 +1,5 @@
+###------ In order to create an EFS you need to create a KMS key.
+
 # create key from key management system
 resource "aws_kms_key" "ACS-kms" {
   description = "KMS key "
@@ -9,7 +11,7 @@ resource "aws_kms_key" "ACS-kms" {
     {
       "Sid": "Enable IAM User Permissions",
       "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/Administrator" },
+      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/terraform" },
       "Action": "kms:*",
       "Resource": "*"
     }
@@ -25,6 +27,8 @@ resource "aws_kms_alias" "alias" {
 }
 
 
+####------ Let us create EFS and it mount targets
+
 # create Elastic file system
 resource "aws_efs_file_system" "ACS-efs" {
   encrypted  = true
@@ -39,6 +43,7 @@ resource "aws_efs_file_system" "ACS-efs" {
 }
 
 # set first mount target for the EFS 
+
 resource "aws_efs_mount_target" "subnet-1" {
   file_system_id  = aws_efs_file_system.ACS-efs.id
   subnet_id       = var.efs-subnet-1
@@ -46,6 +51,7 @@ resource "aws_efs_mount_target" "subnet-1" {
 }
 
 # set second mount target for the EFS 
+
 resource "aws_efs_mount_target" "subnet-2" {
   file_system_id  = aws_efs_file_system.ACS-efs.id
   subnet_id       = var.efs-subnet-2
@@ -53,6 +59,7 @@ resource "aws_efs_mount_target" "subnet-2" {
 }
 
 # create access point for wordpress
+
 resource "aws_efs_access_point" "wordpress" {
   file_system_id = aws_efs_file_system.ACS-efs.id
 
