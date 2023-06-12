@@ -27,3 +27,13 @@
 # #     type = "S"
 # #   }
 # # }
+
+terraform {
+  backend "remote" {
+    organization = "RazaqDevOps"
+
+    workspaces {
+      name = "iac-automation"
+    }
+  }
+}
