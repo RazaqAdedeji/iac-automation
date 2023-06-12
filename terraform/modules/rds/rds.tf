@@ -1,12 +1,12 @@
-# This section will create the subnet group for the RDS  instance using the private subnet IDs
+# This section will create the subnet group for the RDS  instance using the private subnet
 resource "aws_db_subnet_group" "ACS-rds" {
-  name       = "acs-rds-terraform"
+  name       = "acs-rds"
   subnet_ids = var.private_subnets
 
   tags = merge(
     var.tags,
     {
-      Name = "ACS-database"
+      Name = "ACS-rds"
     },
   )
 }
@@ -18,9 +18,9 @@ resource "aws_db_instance" "ACS-rds" {
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
-  db_name                = "dapetodb"
-  username               = var.db-username
-  password               = var.db-password
+  identifier             = "razaqdb"
+  username               = var.master-username
+  password               = var.master-password
   parameter_group_name   = "default.mysql5.7"
   db_subnet_group_name   = aws_db_subnet_group.ACS-rds.name
   skip_final_snapshot    = true

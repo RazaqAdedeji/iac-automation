@@ -59,10 +59,10 @@ module "EFS" {
   account_no   = var.account_no
 }
 
-module "RDS" {
+module "rds" {
   source          = "./modules/rds"
-  db-password     = var.master-password
-  db-username     = var.master-username
+  master-password     = var.master-password
+  master-username     = var.master-username
   db-sg           = [module.security.datalayer-sg]
   private_subnets = [module.VPC.private_subnets-3, module.VPC.private_subnets-4]
 }
